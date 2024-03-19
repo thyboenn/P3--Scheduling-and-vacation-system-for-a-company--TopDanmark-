@@ -1,0 +1,25 @@
+@startuml vacation-class
+!theme plain
+hide empty members
+skinparam linetype ortho
+skinparam SameClassWidth true
+skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
+
+class Vacation {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +Status: VacationStatus
+}
+
+Vacation -[hidden]- VacationStatus
+
+enum VacationStatus {
+  Pending
+  Approved
+  Denied
+}
+
+@enduml

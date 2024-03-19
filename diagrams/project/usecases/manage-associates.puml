@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+hide empty members
+hide empty description
+
+[*] --> ManageAssociates
+
+state "Manage Associates" as ManageAssociates {
+  state "Showing associate list" as SAL
+  state "Associate selected" as AS 
+
+  [*] --> SAL : Access associate list
+
+  SAL -> AS : Select associate
+  AS --> SAL : Assign role\t
+  AS --> SAL : Export hours\t
+  AS --> AS : Edit role
+  AS --> SAL : Cancel
+
+}
+
+ManageAssociates --> [*] : Exit associate list
+@enduml

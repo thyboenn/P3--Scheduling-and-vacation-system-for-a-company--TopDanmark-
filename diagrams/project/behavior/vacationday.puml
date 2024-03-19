@@ -1,0 +1,29 @@
+@startuml vacation
+!theme plain
+hide empty members
+hide empty description
+skinparam groupInheritance 2
+skinparam SameClassWidth true
+hide circle
+top to bottom direction
+
+[*] --> Active
+
+state Active {
+  [*] --> Requested : Vacation\nrequested
+  
+  state Requested
+
+  Requested --> Approved : Vacation\napproved
+  Requested --> Denied : Vacation\ndenied
+  Approved --> Denied : Vacation\ndenied
+
+  Denied --> Requested : Vacation\nchanged
+
+  state Approved
+  state Denied
+}
+
+Active --> [*] : Vacation\nsealed/removed\n\nSchedule deleted
+
+@enduml

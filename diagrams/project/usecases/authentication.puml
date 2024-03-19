@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+hide empty members
+hide empty description
+
+[*] --> Authentication
+
+state Authentication {
+  state "Login page" as Login
+  state "Sign-up page" as Signup
+  state "Using website" as Using 
+  state end2 <<end>>
+
+  [*] --> Login : Access login page
+
+  Login -> Login : Enter details
+  Login --> Using : Press login
+  Login --> Signup : Press sign-up\t
+
+  Signup --> Login : Cancel
+  Signup --> Signup : Enter details
+  Signup --> end2 : Confirm
+
+  Using --> [*] : Press logout
+}
+
+Authentication --> [*] : Exit website
+@enduml

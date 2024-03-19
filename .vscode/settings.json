@@ -1,0 +1,5 @@
+{
+  "dotnet-test-explorer.testProjectPath": "./implementation/Backend/Backend.Api.Test",
+  "dotnet-test-explorer.testArguments": "--collect:\"XPlat Code Coverage\"",
+  "coverage-gutters.coverageFileNames": ["coverage.cobertura.xml"]
+}

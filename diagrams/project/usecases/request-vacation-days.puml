@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+hide empty members
+hide empty description
+
+[*] --> RequestVacactionDays
+
+state "Request Vacation Days" as RequestVacactionDays {
+  state "Vacation day preview" as VDP
+  state "Selecting vacation days" as SD
+  state "Awaiting confirmation" as AC 
+
+  [*] --> VDP : Access vacation day page
+
+  VDP --> SD : Select vacation days
+  SD --> VDP : Cancel\t
+  SD --> AC : Request vacation days
+  AC --> VDP : Confirm\t
+  AC --> VDP : Deny
+  AC --> VDP : Cancel request
+}
+RequestVacactionDays --> [*] : Exit vacation days page
+@enduml

@@ -1,0 +1,29 @@
+@startuml workevent-class
+!theme plain
+hide empty members
+skinparam linetype ortho
+skinparam SameClassWidth true
+skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
+
+WorkEvent -[hidden]- EventType
+
+class WorkEvent {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +EventType: EventType
+  +OnThePhone: bool
+  +WorkingFromHome: bool
+  +Note: string
+}
+
+enum EventType {
+    WorkHours
+    Meeting
+    Social
+    ...
+}
+
+@enduml

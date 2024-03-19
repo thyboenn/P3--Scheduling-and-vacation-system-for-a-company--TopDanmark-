@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+hide empty members
+hide empty description
+
+[*] --> ManageSchedulePreview
+
+state "Manage Schedule Preview" as ManageSchedulePreview {
+  state "Schedule preview" as SP
+  state "Changing preview" as CP 
+
+  [*] --> SP : Access schedule
+
+  SP -> SP : Get next week\n Get previous week
+  SP -> CP : Edit schedule preview\t
+  CP --> CP : Edit preview
+  CP --> SP : Save\t
+  CP --> SP : Cancel
+
+}
+
+ManageSchedulePreview --> [*] : Exit schedule preview
+@enduml

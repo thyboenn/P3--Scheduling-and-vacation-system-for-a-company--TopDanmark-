@@ -1,0 +1,32 @@
+@startuml
+!theme plain
+hide empty members
+hide empty description
+
+
+[*] --> ManageEvents
+
+state "Manage events" as ManageEvents {
+  state "Schedule preview" as SchPre
+  state "Add event details" as AddEve
+  state "Event Selected" as EveSel
+
+  [*] --> SchPre : Access schedule
+
+  SchPre -> AddEve : Start adding event
+  SchPre -> EveSel : Select event\t
+
+  AddEve -> SchPre : Confirm event
+
+  AddEve -> AddEve : Enter details
+  AddEve -> SchPre : Cancel
+
+  EveSel --> SchPre : Cancel\t
+  EveSel --> SchPre : Delete
+  EveSel -> EveSel : Edit
+  EveSel -> SchPre : Save\t
+ 
+}
+
+ManageEvents --> [*] : Exit schedule preview
+@enduml

@@ -1,0 +1,41 @@
+@startuml associate-class
+!theme plain
+hide empty members
+skinparam linetype ortho
+skinparam SameClassWidth true
+skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
+
+Associate -[hidden]- Permission
+Associate "1" o-l- "1" AssociateSchedule
+Schedule <|-u- AssociateSchedule
+Associate "0..*" o-r- "1" Role
+
+class Associate {
+  +Id: Guid
+  +Name: string
+  +Email: string
+  +MaxWorkHours: int [0..1]
+  +ExtraPermissions: Permission [0..*]
+}
+class AssociateSchedule {}
+abstract class Schedule {
+  +Id: Guid
+}
+class Role {
+  +Id: Guid
+  +Permissions: Permission[1..*]
+}
+enum Permission {
+    Admin
+    CanManageOtherAssociateSchedule
+    CanManageOwnSchedule
+    CanManageSharedSchedule
+    CanManagePermission
+    CanManageAssociates
+    CanSeeSchedules
+    ...
+}
+
+@enduml

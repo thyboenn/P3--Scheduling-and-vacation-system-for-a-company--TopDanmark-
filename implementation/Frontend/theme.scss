@@ -1,0 +1,9 @@
+@use "sass:color";
+
+@forward "~attractions/_variables" with (
+  $main: #0b4f98,
+  $font: (
+    "Roboto",
+    sans-serif,
+  )
+);

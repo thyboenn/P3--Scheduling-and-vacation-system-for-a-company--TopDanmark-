@@ -1,0 +1,80 @@
+@startuml class-diagram
+!theme plain
+hide empty members
+skinparam linetype ortho
+skinparam SameClassWidth true
+skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
+
+Role -[hidden]l- Permission
+Associate "1" o-u- "1" AssociateSchedule
+Associate "0..*" o-d- "1" Role
+EventType -[hidden]r- WorkEvent
+Schedule "1" o-u- "0..*" WorkEvent
+Schedule "1" o-d- "0..*" Vacation
+Schedule <|-r- AssociateSchedule
+SharedSchedule -|> Schedule
+VacationStatus -[hidden]r- Vacation
+WorkEvent -[hidden]r- EventType
+
+enum EventType {
+  WorkHours
+  Meeting
+  Social
+  ...
+}
+
+class Associate {
+  +Id: Guid
+  +Name: string
+  +Email: string
+  +MaxWorkHours: int [0..1]
+  +ExtraPermissions: Permission [0..*]
+}
+
+enum Permission {
+    Admin
+    CanManageOtherAssociateSchedule
+    CanManageOwnSchedule
+    CanManageSharedSchedule
+    CanManagePermission
+    CanManageAssociates
+    CanSeeSchedules
+    ...
+}
+
+abstract class Schedule {
+  +Id: Guid
+}
+class AssociateSchedule {}
+class SharedSchedule {}
+
+class WorkEvent {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +EventType: EventType
+  +OnThePhone: bool
+  +WorkingFromHome: bool
+  +Note: string
+}
+
+class Vacation {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +Status: VacationStatus
+}
+
+class Role {
+  +Id: Guid
+  +Permissions: Permission[1..*]
+}
+enum VacationStatus {
+    Pending
+    Approved
+    Denied
+}
+
+@enduml

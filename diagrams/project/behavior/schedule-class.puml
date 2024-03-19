@@ -1,0 +1,34 @@
+@startuml schedule-class
+!theme plain
+hide empty members
+skinparam linetype ortho
+skinparam SameClassWidth true
+skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
+
+abstract class Schedule {
+  +Id: Guid
+}
+
+Schedule "1" o-- "0..*" WorkEvent
+Schedule "1" o-- "0..*" Vacation
+
+class WorkEvent {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +EventType: EventType
+  +OnThePhone: bool
+  +WorkingFromHome: bool
+  +Note: string
+}
+
+class Vacation {
+  +Id: Guid
+  +Start: DateTime
+  +End: DateTime
+  +Status: VacationStatus
+}
+
+@enduml

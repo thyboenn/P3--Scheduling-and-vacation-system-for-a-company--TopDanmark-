@@ -1,0 +1,26 @@
+@startuml associate
+!theme plain
+hide empty members
+hide empty description
+skinparam groupInheritance 2
+skinparam SameClassWidth true
+hide circle
+
+
+[*] --> Active
+
+state Active {
+    state "Has no Role" as NoRole
+    state "Has one Role" as HasRole
+    
+    [*] --> NoRole : Associate hired
+    NoRole --> HasRole : Role added
+    HasRole --> NoRole : Role removed
+    HasRole --> HasRole : Role changed
+}
+
+Active --> Active : Permission added\nPermission removed
+
+
+Active --> [*] : Associate dissociated
+@enduml

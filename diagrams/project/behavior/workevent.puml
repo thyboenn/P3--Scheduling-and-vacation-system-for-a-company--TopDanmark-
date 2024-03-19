@@ -1,0 +1,27 @@
+@startuml event
+!theme plain
+hide empty members
+hide empty description
+skinparam groupInheritance 2
+skinparam SameClassWidth true
+hide circle
+top to bottom direction
+
+[*] --> Active
+
+state Active {
+  state "No Active Workitems" as A
+  state "With Active Workitems" as B
+
+  [*] --> A : Event created
+  
+  A --> B : WorkItem added
+  B --> A : WorkItem completed\nWorkItem removed
+
+  A --> A : Event edited
+  B --> B : Event edited\nWorkItem completed\nWorkItem removed
+}
+
+Active --> [*] : Event deleted\nAssociate fired/retired/quit
+
+@enduml

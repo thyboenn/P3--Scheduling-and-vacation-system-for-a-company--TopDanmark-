@@ -1,0 +1,31 @@
+' NOT USED IN REPORT
+@startuml schedule
+!theme plain
+hide empty members
+hide empty description
+skinparam groupInheritance 2
+skinparam SameClassWidth true
+hide circle
+
+[*] --> Active
+
+state Active {
+  [*] --> Empty : Schedule created
+
+  Empty --> NonEmpty : New event\ncreated
+
+
+  NonEmpty --> Empty : Event deleted
+
+
+  NonEmpty --> NonEmpty : New event created\nEvent edited\nEvent deleted
+
+
+  state "Non-empty" as NonEmpty 
+  state Empty
+}
+
+Active --> [*] : Associate fired/retired/quit\nSchedule deleted
+
+
+@enduml

@@ -1,0 +1,57 @@
+name: Build and test
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    env:
+      backend-directory: implementation/Backend/
+      frontend-directory: implementation/Frontend/
+    runs-on: ubuntu-latest
+    name: Build and test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Install csharpier
+        run: dotnet tool install csharpier -g
+      - name: Check formatting
+        run: |
+          export PATH="$PATH:/root/.dotnet/tools"
+          dotnet csharpier --check .
+        working-directory: ${{env.backend-directory}}
+      - name: Restore dependencies
+        working-directory: ${{env.backend-directory}}
+        run: dotnet restore
+      - name: Build solution
+        working-directory: ${{env.backend-directory}}
+        run: dotnet build
+      - name: Test solution
+        working-directory: ${{env.backend-directory}}
+        run: dotnet test
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Yarn
+        run: npm install --global yarn
+      - name: Install dependencies
+        run: yarn
+        working-directory: ${{env.frontend-directory}}
+      - name: Typecheck frontend
+        run: yarn run check
+        working-directory: ${{env.frontend-directory}}
+      - name: Check frontend formatting
+        run: yarn format:check
+        working-directory: ${{env.frontend-directory}}
+      - name: Build frontend
+        run: yarn build
+        working-directory: ${{env.frontend-directory}}
